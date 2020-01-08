@@ -14,6 +14,13 @@ const (
 	ctxParentID = "ctx.parentid"
 )
 
+var (
+	SetFormatter    = xLOG.SetFormatter
+	SetOutput       = xLOG.SetOutput
+	SetLevel        = xLOG.SetLevel
+	SetReportCaller = xLOG.SetReportCaller
+)
+
 func init() {
 	xLOG.SetOutput(os.Stderr)
 	xLOG.SetLevel(logrus.TraceLevel)
