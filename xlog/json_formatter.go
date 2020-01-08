@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/jinares/gopkg/xtools"
+	"github.com/jinares/gopkg/xtrace"
 	"github.com/sirupsen/logrus"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -24,7 +24,8 @@ timestamp := entry.Time.Format("2006-01-02 15:04:05")
 func (formatter JSONLoggerFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 
 	time_formatter := "2006-01-02T15:04:05Z07:00.000"
-	servicename := os.Getenv(envServiceName)
+
+	servicename := xtrace.GetServiceName()
 	field := map[string]interface{}{}
 	data := map[string]interface{}{
 		"servicename": servicename,

@@ -3,6 +3,7 @@ package xlog
 import (
 	"bytes"
 	"github.com/jinares/gopkg/xtools"
+	"github.com/jinares/gopkg/xtrace"
 	"github.com/sirupsen/logrus"
 	"os"
 	"strconv"
@@ -27,7 +28,7 @@ func (formatter TextLoggerFormatter) Format(entry *logrus.Entry) ([]byte, error)
 	buffer.WriteString(strings.ToUpper(entry.Level.String()))
 	buffer.WriteString(" ")
 	buffer.WriteByte('[')
-	buffer.WriteString(os.Getenv(envServiceName))
+	buffer.WriteString(xtrace.GetServiceName())
 	buffer.WriteByte(',')
 	for _, val := range []string{ctxTraceID, ctxSpanID, ctxParentID} {
 		vval := entry.Data[val]
