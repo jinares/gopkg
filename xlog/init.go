@@ -6,7 +6,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+const (
+	envServiceName = "JAEGER_SERVICE_NAME"
+
+	ctxTraceID  = "ctx.traceid"
+	ctxSpanID   = "ctx.spanid"
+	ctxParentID = "ctx.parentid"
+)
+
 func init() {
-	tlog.SetOutput(os.Stderr)
-	tlog.SetLevel(logrus.TraceLevel)
+	xLOG.SetOutput(os.Stderr)
+	xLOG.SetLevel(logrus.TraceLevel)
 }

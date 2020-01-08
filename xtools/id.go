@@ -3,6 +3,7 @@ package xtools
 import (
 	"crypto/rand"
 	"fmt"
+	"github.com/globalsign/mgo/bson"
 	"io"
 	"strconv"
 	"strings"
@@ -47,4 +48,40 @@ func Guid() string {
 	}
 	uuid := fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:])
 	return strings.ToUpper(uuid)
+}
+
+/*
+//OrderID OrderID
+func OrderID(userid string) string {
+
+	// 20190718  99  7724592251254372
+	//   20060102  12  26-12=14
+	// [时间8位][99 2位][用户id hash 2位][机器位 2 位][顺序号 4位][随机数 8] = 8+2+2+2+4+8=26
+	datetime := time.Now()
+	datetime.Second()
+	hostname, _ := os.Hostname()
+
+	hashUser := fmt.Sprintf("%02s", xtools.ToStr(HashID(userid, int64(orderModVal))))
+
+	//datetimestr := time.Now().Format("20060102150405") // 14
+	hashHost := fmt.Sprintf("%0.1d", HashID(hostname, 9))
+	randstr := datetime.Format("150405") + hashHost + randid(7)
+
+	return datetime.Format("20060102") + "99" + hashUser + randstr
+}
+*/
+
+func ObjectIDCounter(w int) string {
+	serial := fmt.Sprintf("%d", bson.NewObjectId().Counter())
+	if w < 1 {
+		return serial
+	}
+	l := len(serial)
+	if l > w {
+		return serial[l-w:]
+	}
+	if l == w {
+		return serial
+	}
+	return serial + RandID(w-l)
 }

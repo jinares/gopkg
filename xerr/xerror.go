@@ -13,10 +13,9 @@ import (
 
 type (
 	XError struct {
-		Code    XCode       `json:"code"`
-		Message string      `json:"message"`
-		Where   string      `json:"where"`
-		Detail  interface{} `json:"data"`
+		Code    XCode  `json:"code"`
+		Message string `json:"message"`
+		Where   string `json:"where"`
 	}
 )
 
@@ -48,12 +47,16 @@ Error() string
 func (p *XError) String() string {
 	return fmt.Sprintf("%s %s", p.Error(), p.Where)
 }
-func (p *XError) WithDetail() string {
-	if p.Detail != nil {
-		fmt.Sprintf("%s %s %s", p.Where, p.Error(), xtools.JSONMarshal(p.Detail))
+func String(err error) string {
+	if err == nil {
+		return ""
 	}
-	return fmt.Sprintf("%s %s", p.Where, p.Error())
+	if val, isok := (err).(*XError); isok {
+		return val.String()
+	}
+	return err.Error()
 }
+
 func XErr(code XCode, msg string, where ...bool) *XError {
 
 	if len(where) > 0 && where[0] {
