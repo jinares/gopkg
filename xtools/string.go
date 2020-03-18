@@ -55,7 +55,7 @@ func CRC32(data string) int64 {
 //Sleep Sleep
 func Sleep(second time.Duration) {
 
-	time.Sleep(second * time.Second)
+	time.Sleep(second)
 }
 
 //Version 秒

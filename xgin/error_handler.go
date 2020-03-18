@@ -1,6 +1,7 @@
 package xgin
 
 import (
+	"html/template"
 	"net/http"
 
 	"github.com/jinares/gopkg/xlog"
@@ -26,6 +27,7 @@ func errorHandler() func(writer http.ResponseWriter, request *http.Request, err 
 			"msg": "服务繁忙,请稍后再试",
 		}
 		if callback != "" {
+			callback = template.JSEscapeString(callback)
 			writer.Write([]byte(callback + "(" + xtools.JSONToStr(ret) + ")"))
 		} else {
 			writer.Write([]byte(xtools.JSONToStr(ret)))
